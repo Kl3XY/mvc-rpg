@@ -31,8 +31,6 @@ namespace mvc_rpg.Models
         public eyeType EyeType { get; set; }
         [NotMapped]
         public IFormFile ProfilePictureRaw { get; set; }
-        [NotMapped]
-        public Bitmap ProfilePictureRetrieve { get; set; }
         public byte[] ProfilePicture { get; set; }
         public List<Item> Inventory { get; set; }
        

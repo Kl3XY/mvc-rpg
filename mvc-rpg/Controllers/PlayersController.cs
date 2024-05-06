@@ -32,8 +32,6 @@ namespace mvc_rpg.Controllers
             var player = await _context.Players
                 .FirstOrDefaultAsync(m => m.ID == id);
 
-            player.ProfilePictureRetrieve = GetImageFromByteArray(player.ProfilePicture);
-
             if (player == null)
             {
                 return NotFound();
