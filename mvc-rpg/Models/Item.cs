@@ -4,7 +4,8 @@
     {
         Collectible,
         Gold,
-        Furniture
+        Furniture,
+        Trash
     }
 
     public class Item
@@ -12,6 +13,6 @@
         public int ID { get; set; }
         public string Name { get; set; }
         public itemType ItemType { get; set; }
-        public int Strength { get; set; }
+        public List<Player> Players { get; } = [];
     }
 }

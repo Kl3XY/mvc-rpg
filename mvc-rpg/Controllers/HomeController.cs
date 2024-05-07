@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using mvc_rpg.Data;
 using mvc_rpg.Models;
 using mvc_rpg.ViewModel;
+using System;
 using System.Diagnostics;
 
 namespace mvc_rpg.Controllers
@@ -11,6 +12,7 @@ namespace mvc_rpg.Controllers
     public class HomeController : Controller
     {
         private readonly RPGContext _context;
+        private string searchTerm = "";
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger, RPGContext context)
@@ -38,14 +40,14 @@ namespace mvc_rpg.Controllers
                 
 
             var players = _context.Players
+                .Include(m => m.Items)
                 .Where(m => m.isAlive == true);
-            var pList = enemies
-                .Skip(random.Next(enemies.Count()))
-                .Take(1)
-                .ToList();
+            var pList = players
+                .Skip(random.Next(players.Count()))
+                .Take(1);
             vsScreen.Graves = graves.OrderByDescending(m => m.DateTime).ToList();
             if (eList.Count == 0) { ModelState.AddModelError(nameof(VersusScreen.Enemy), "All Enemies have been defeated"); return View(vsScreen); }
-            if (pList.Count == 0) { ModelState.AddModelError(nameof(VersusScreen.Player), "All Players have been defeated"); return View(vsScreen); }
+            if (pList.ToList().Count == 0) { ModelState.AddModelError(nameof(VersusScreen.Player), "All Players have been defeated"); return View(vsScreen); }
             vsScreen.Enemy = enemies.First();
             vsScreen.Player = players.First();
             vsScreen.PlayerKilledEnemies = graves
@@ -53,10 +55,25 @@ namespace mvc_rpg.Controllers
                 .OrderByDescending(m => m.DateTime)
                 .ToList();
 
-            int rnd = new Random().Next(0, 2);
-            if (rnd == 0)
+            var rnd = new Random();
+            if (rnd.Next(0, 2) == 0)
             {
                 enemies.First().isAlive = false;
+
+                var amountOfItems = rnd.Next(1, 5);
+
+                while(amountOfItems > 0)
+                {
+                    var items = _context.Items
+                    .Skip(random.Next(_context.Items.Count()))
+                    .Take(1)
+                    .First();
+
+                    pList.First().Items.Add(items);
+
+                    amountOfItems -= 1;
+                }
+
                 var Grave = new Grave()
                 {
                     EnemyID = vsScreen.Enemy.ID,
@@ -84,9 +101,34 @@ namespace mvc_rpg.Controllers
             return View(vsScreen);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Inventory()
         {
-            return View();
+            var players = await _context.Players
+                .Include(m => m.Items)
+                .FirstOrDefaultAsync(m => m.ID == HttpContext.Session.GetInt32("user_ID"));
+
+            return View(players);
+        }
+
+        [HttpGet]
+        public IActionResult SearchPlayer()
+        {
+            var players = _context.Players
+                .Include(m => m.Items)
+                .Where(m => m.Name.Contains(searchTerm));
+
+            var newObj = new SearchPlayers();
+            newObj.Players = players.ToList();
+            newObj.Search = searchTerm;
+
+            return View(newObj);
+        }
+        [HttpPost]
+        public IActionResult SearchPlayer(SearchPlayers searchPlayers)
+        {
+            searchTerm = searchPlayers.Search;
+
+            return Redirect("/Home/SearchPlayer");
         }
 
         public IActionResult Logout()

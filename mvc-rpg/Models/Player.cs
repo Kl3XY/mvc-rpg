@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Azure;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 
 namespace mvc_rpg.Models
@@ -11,7 +12,7 @@ namespace mvc_rpg.Models
         [NotMapped]
         public IFormFile ProfilePictureRaw { get; set; }
         public byte[] ProfilePicture { get; set; }
-        public List<Item> Inventory { get; set; }
-       
+        public List<Item> Items { get; } = [];
+
     }
 }

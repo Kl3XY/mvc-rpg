@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using mvc_rpg.Models;
 
 namespace mvc_rpg.Data
@@ -8,7 +9,7 @@ namespace mvc_rpg.Data
         public RPGContext(DbContextOptions<RPGContext> options) : base(options) { }
 
         public DbSet<Player> Players { get; set; }
-        public DbSet<Player> Items { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<EnemyType> EnemyTypes { get; set; }
         public DbSet<Grave> Graves { get; set; }
@@ -20,6 +21,10 @@ namespace mvc_rpg.Data
             modelBuilder.Entity<Enemy>().ToTable("Enemy");
             modelBuilder.Entity<EnemyType>().ToTable("EnemyType");
             modelBuilder.Entity<Grave>().ToTable("Grave");
+
+            modelBuilder.Entity<Player>()
+            .HasMany(e => e.Items)
+            .WithMany(e => e.Players);
         }
     }
 }

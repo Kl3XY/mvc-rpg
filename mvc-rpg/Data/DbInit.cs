@@ -40,6 +40,24 @@ namespace mvc_rpg.Data
             }
             context.SaveChanges();
 
+            var items = new Item[]
+            {
+                new Item{Name="Old Boots", ItemType = itemType.Trash},
+                new Item{Name="Rusted Armor", ItemType = itemType.Trash},
+                new Item{Name="Rusted Weapon", ItemType = itemType.Trash},
+                new Item{Name="Caps", ItemType = itemType.Trash},
+                new Item{Name="Old Collectible Relic", ItemType = itemType.Collectible},
+                new Item{Name="Table", ItemType = itemType.Furniture},
+                new Item{Name="Chair", ItemType = itemType.Furniture},
+                new Item{Name="Candles", ItemType = itemType.Furniture},
+            };
+
+            foreach (Item s in items)
+            {
+                context.Items.Add(s);
+            }
+            context.SaveChanges();
+
             var enemyType = new EnemyType[]
             {
                 new EnemyType{Name="Small Foe"},
