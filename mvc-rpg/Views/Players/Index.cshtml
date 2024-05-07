@@ -18,27 +18,7 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Health" class="control-label"></label>
-                <input asp-for="Health" class="form-control" />
-                <span asp-validation-for="Health" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SkinType" class="control-label"></label>
-                <select asp-for="SkinType" asp-items="Html.GetEnumSelectList<skinType>()" class="form-control"></select>
-                <span asp-validation-for="SkinType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HairType" class="control-label"></label>
-                <select asp-for="HairType" asp-items="Html.GetEnumSelectList<hairType>()" class=" form-control"></select>
-                <span asp-validation-for="HairType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EyeType" class="control-label"></label>
-                <select asp-for="EyeType" asp-items="Html.GetEnumSelectList<eyeType>()" class=" form-control"></select>
-                <span asp-validation-for="EyeType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProfilePictureRaw" class="control-label"></label>
+                <div class="control-label">Profile Picture (max. 512 x 512 px)</div>
                 <input asp-for="ProfilePictureRaw" />
                 <span asp-validation-for="ProfilePictureRaw" class="text-danger"></span>
             </div>

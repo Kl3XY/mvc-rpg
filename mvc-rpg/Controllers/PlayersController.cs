@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -46,13 +48,10 @@ namespace mvc_rpg.Controllers
             return View();
         }
 
-        private byte[] GetByteArrayFromImage(IFormFile file)
+        public static byte[] ImageToByte(Image img)
         {
-            using (var target = new MemoryStream())
-            {
-                file.CopyTo(target);
-                return target.ToArray();
-            }
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
         public static Bitmap GetImageFromByteArray(byte[] byteArray)
@@ -72,6 +71,40 @@ namespace mvc_rpg.Controllers
             return bm;
         }
 
+        private static Bitmap ResizeImage(Bitmap imgToResize, Size size)
+        {
+            // Get the image current width
+            int sourceWidth = imgToResize.Width;
+            // Get the image current height
+            int sourceHeight = imgToResize.Height;
+            float nPercent = 0;
+            float nPercentW = 0;
+            float nPercentH = 0;
+            // Calculate width and height with new desired size
+            nPercentW = ((float)size.Width / (float)sourceWidth);
+            nPercentH = ((float)size.Height / (float)sourceHeight);
+            nPercent = Math.Min(nPercentW, nPercentH);
+            // New Width and Height
+            int destWidth = (int)(sourceWidth * nPercent);
+            int destHeight = (int)(sourceHeight * nPercent);
+            Bitmap b = new Bitmap(destWidth, destHeight);
+            Graphics g = Graphics.FromImage((System.Drawing.Image)b);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            // Draw image with new width and height
+            g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
+            g.Dispose();
+            return (Bitmap)b;
+        }
+
+        private byte[] GetByteArrayFromImage(IFormFile file)
+        {
+            using (var target = new MemoryStream())
+            {
+                file.CopyTo(target);
+                return target.ToArray();
+            }
+        }
+
         // POST: Players/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -83,11 +116,27 @@ namespace mvc_rpg.Controllers
             {
                 player.ProfilePicture = GetByteArrayFromImage(player.ProfilePictureRaw);
             }
+            player.isAlive = true;
+            Bitmap bmp;
+            using (var ms = new MemoryStream(player.ProfilePicture))
+            {
+                bmp = new Bitmap(ms);
+            }
+
+            bmp = ResizeImage(bmp, new Size(512, 512));
+
+
+            if (player.ProfilePictureRaw != null)
+            {
+                player.ProfilePicture = ImageToByte(bmp);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(player);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                HttpContext.Session.SetInt32("user_ID", player.ID);
+                return Redirect($"/Players/Details/{player.ID}");
             }
             return Redirect($"/Players/Details/{player.ID}");
         }

@@ -27,16 +27,44 @@ namespace mvc_rpg.Data
 
             var players = new Player[]
             {
-                new Player{Name="Kl3XY", EyeType=eyeType.Blue, SkinType=skinType.Black, HairType=hairType.Long, Health=100 }, 
-                new Player{Name="Yooo", EyeType=eyeType.Blue, SkinType=skinType.Black, HairType=hairType.Long, Health=100 }, 
-                new Player{Name="Doomer", EyeType=eyeType.Blue, SkinType=skinType.Black, HairType=hairType.Long, Health=100 }, 
-                new Player{Name="Ner", EyeType=eyeType.Blue, SkinType=skinType.Black, HairType=hairType.Long, Health=100 }, 
-                new Player{Name="Bro", EyeType=eyeType.Blue, SkinType=skinType.Black, HairType=hairType.Long, Health=100 }
+                new Player{Name="Kl3XY", isAlive=true }, 
+                new Player{Name="Yooo", isAlive=true}, 
+                new Player{Name="Doomer", isAlive=true}, 
+                new Player{Name="Ner", isAlive=true}, 
+                new Player{Name="Bro", isAlive=true}
             };
             foreach (Player s in players)
             {
                 s.ProfilePicture = defaultImage;
                 context.Players.Add(s);
+            }
+            context.SaveChanges();
+
+            var enemyType = new EnemyType[]
+            {
+                new EnemyType{Name="Small Foe"},
+                new EnemyType{Name="Large Foe"},
+                new EnemyType{Name="Boss"},
+                new EnemyType{Name="Large Boss"},
+            };
+            foreach (var s in enemyType)
+            {
+                context.EnemyTypes.Add(s);
+            }
+            context.SaveChanges();
+
+
+            var enemy = new Enemy[]
+            {
+                new Enemy{Name="Goblin", EnemyTypeID=1, isAlive=true},
+                new Enemy{Name="Golem", EnemyTypeID=3, isAlive=true},
+                new Enemy{Name="Rogue", EnemyTypeID=1, isAlive=true},
+                new Enemy{Name="Thief", EnemyTypeID=1, isAlive=true},
+                new Enemy{Name="Monster", EnemyTypeID=2, isAlive=true}
+            };
+            foreach (var s in enemy)
+            {
+                context.Enemies.Add(s);
             }
             context.SaveChanges();
         }

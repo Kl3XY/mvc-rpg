@@ -2,10 +2,9 @@
 {
     public enum itemType
     {
-        Weapon,
-        Armor,
-        RevivingItem,
-        HealingItem
+        Collectible,
+        Gold,
+        Furniture
     }
 
     public class Item
