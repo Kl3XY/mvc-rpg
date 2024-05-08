@@ -12,13 +12,24 @@ namespace mvc_rpg.Controllers
     public class HomeController : Controller
     {
         private readonly RPGContext _context;
-        private string searchTerm = "";
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger, RPGContext context)
         {
             _logger = logger;
             _context = context;
+        }
+
+        public string choose(string[] choose)
+        {
+            var rnd = new Random();
+            return choose.Skip(rnd.Next(0, choose.Length)).First();
+        }
+
+        // GET: Players/Create
+        public IActionResult Admin()
+        {
+            return View();
         }
 
         public IActionResult Index()
@@ -28,11 +39,14 @@ namespace mvc_rpg.Controllers
             var enemies = _context.Enemies
                 .Include(m => m.EnemyType)
                 .Where(m => m.isAlive == true);
-            var eList = enemies
+            Enemy eList = null;
+            if (enemies.Any())
+            {
+                eList = enemies
                 .Skip(random.Next(enemies.Count()))
                 .Take(1)
-                .ToList();
-
+                .First();
+            }
             var graves = _context.Graves
                 .Include(m => m.Enemy)
                 .Include(m => m.Player)
@@ -42,34 +56,46 @@ namespace mvc_rpg.Controllers
             var players = _context.Players
                 .Include(m => m.Items)
                 .Where(m => m.isAlive == true);
-            var pList = players
-                .Skip(random.Next(players.Count()))
-                .Take(1);
+            Player pList = null;
+            if (players.Any())
+            {
+                pList = players
+                    .Skip(random.Next(players.Count()))
+                    .Take(1)
+                    .First();
+            }
+            
             vsScreen.Graves = graves.OrderByDescending(m => m.DateTime).ToList();
-            if (eList.Count == 0) { ModelState.AddModelError(nameof(VersusScreen.Enemy), "All Enemies have been defeated"); return View(vsScreen); }
-            if (pList.ToList().Count == 0) { ModelState.AddModelError(nameof(VersusScreen.Player), "All Players have been defeated"); return View(vsScreen); }
-            vsScreen.Enemy = enemies.First();
-            vsScreen.Player = players.First();
+            if (eList == null) { ModelState.AddModelError(nameof(VersusScreen.Enemy), "All Enemies have been defeated"); return View(vsScreen); }
+            if (pList == null) { ModelState.AddModelError(nameof(VersusScreen.Player), "All Players have been defeated"); return View(vsScreen); }
+            vsScreen.Enemy = eList;
+            vsScreen.Player = pList;
             vsScreen.PlayerKilledEnemies = graves
                 .Where(m => m.PlayerID == vsScreen.Player.ID)
                 .OrderByDescending(m => m.DateTime)
                 .ToList();
 
             var rnd = new Random();
-            if (rnd.Next(0, 2) == 0)
+            var choose = rnd.Next(0, 2);
+            if (choose == 0)
             {
-                enemies.First().isAlive = false;
+                eList.isAlive = false;
 
                 var amountOfItems = rnd.Next(1, 5);
 
                 while(amountOfItems > 0)
                 {
-                    var items = _context.Items
-                    .Skip(random.Next(_context.Items.Count()))
+                    var newItem = new Item();
+                    newItem.Name = this.choose(new string[] {"Stick", "Magazine", "Trophy", "Sword", "Golden Trophy", "Band Tape", "Mixtapes"});
+
+                    var items = _context.ItemTypes
+                    .Skip(random.Next(_context.ItemTypes.Count()))
                     .Take(1)
                     .First();
 
-                    pList.First().Items.Add(items);
+                    newItem.ItemTypeID = items.ID;
+
+                    pList.Items.Add(newItem);
 
                     amountOfItems -= 1;
                 }
@@ -77,7 +103,7 @@ namespace mvc_rpg.Controllers
                 var Grave = new Grave()
                 {
                     EnemyID = vsScreen.Enemy.ID,
-                    PlayerID = vsScreen.Enemy.ID,
+                    PlayerID = vsScreen.Player.ID,
                     KilledBy = killedBy.Player,
                     DateTime = DateTime.Now
                 };
@@ -85,11 +111,11 @@ namespace mvc_rpg.Controllers
             }
             else
             {
-                players.First().isAlive = false;
+                pList.isAlive = false;
                 var Grave = new Grave()
                 {
                     EnemyID = vsScreen.Enemy.ID,
-                    PlayerID = vsScreen.Enemy.ID,
+                    PlayerID = vsScreen.Player.ID,
                     KilledBy = killedBy.Enemy,
                     DateTime = DateTime.Now
                 };
@@ -111,7 +137,7 @@ namespace mvc_rpg.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchPlayer()
+        public IActionResult SearchPlayer(string searchTerm = "")
         {
             var players = _context.Players
                 .Include(m => m.Items)
@@ -123,12 +149,18 @@ namespace mvc_rpg.Controllers
 
             return View(newObj);
         }
-        [HttpPost]
-        public IActionResult SearchPlayer(SearchPlayers searchPlayers)
+        public IActionResult HallOfFame()
         {
-            searchTerm = searchPlayers.Search;
+            var graves = _context.Graves
+                .Include(m => m.Enemy)
+                .Include(m => m.Player)
+                .Where(m => m.KilledBy != killedBy.Enemy)
+                .GroupBy(m => m.Player)
+                .ToList();
 
-            return Redirect("/Home/SearchPlayer");
+            graves = graves.OrderByDescending(m => m.Count()).ToList();
+
+            return View(graves);
         }
 
         public IActionResult Logout()

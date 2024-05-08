@@ -1,0 +1,24 @@
+﻿@model List<System.Linq.IGrouping<mvc_rpg.Models.Player, mvc_rpg.Models.Grave>>
+@{
+}
+<style>
+    img {
+        width:64px;
+        height:64px;
+    }
+
+</style>
+
+
+@foreach(var player in Model)
+{
+    <p>
+        @{
+            var base64 = Convert.ToBase64String(player.Key.ProfilePicture);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            //Converted das ByteArray zu Base64 und converted es in ein bild.
+        }
+        <img src="@imgSrc" />
+        <a asp-action="Details" asp-controller="Players" asp-route-id="@player.Key.ID">@player.Key.Name Killed @player.Count() Enemies</a>
+    </p>
+}

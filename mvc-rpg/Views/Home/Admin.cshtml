@@ -1,0 +1,12 @@
+﻿@model List<System.Linq.IGrouping<mvc_rpg.Models.Player, mvc_rpg.Models.Grave>>
+@{
+}
+@if (Context.Session.GetInt32("user_ID") == -1)
+{
+    <a asp-action="Index" asp-controller="Enemies">Edit Enemies</a>
+    <a asp-action="Index" asp-controller="EnemyTypes">Edit Enemy Types</a>
+    <a asp-action="Index" asp-controller="ItemTypes">Edit Item Types</a>
+} else
+{
+    <p>You do not have acces to this page</p>
+}

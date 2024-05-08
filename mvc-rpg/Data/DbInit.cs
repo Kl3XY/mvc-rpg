@@ -40,16 +40,32 @@ namespace mvc_rpg.Data
             }
             context.SaveChanges();
 
+
+
+            var itemType = new ItemType[]
+            {
+                new ItemType{Name="Collectible"},
+                new ItemType{Name="Gold"},
+                new ItemType{Name="Furniture"},
+                new ItemType{Name="Trash"}
+            };
+            foreach (var s in itemType)
+            {
+                context.ItemTypes.Add(s);
+            }
+            context.SaveChanges();
+
+
             var items = new Item[]
             {
-                new Item{Name="Old Boots", ItemType = itemType.Trash},
-                new Item{Name="Rusted Armor", ItemType = itemType.Trash},
-                new Item{Name="Rusted Weapon", ItemType = itemType.Trash},
-                new Item{Name="Caps", ItemType = itemType.Trash},
-                new Item{Name="Old Collectible Relic", ItemType = itemType.Collectible},
-                new Item{Name="Table", ItemType = itemType.Furniture},
-                new Item{Name="Chair", ItemType = itemType.Furniture},
-                new Item{Name="Candles", ItemType = itemType.Furniture},
+                new Item{Name="Old Boots", ItemTypeID = 4},
+                new Item{Name="Rusted Armor", ItemTypeID = 4},
+                new Item{Name="Rusted Weapon", ItemTypeID = 4},
+                new Item{Name="Caps", ItemTypeID = 4},
+                new Item{Name="Old Collectible Relic", ItemTypeID = 1},
+                new Item{Name="Table", ItemTypeID = 3},
+                new Item{Name="Chair", ItemTypeID = 3},
+                new Item{Name="Candles", ItemTypeID = 3},
             };
 
             foreach (Item s in items)
@@ -85,6 +101,8 @@ namespace mvc_rpg.Data
                 context.Enemies.Add(s);
             }
             context.SaveChanges();
+
+
         }
     }
 }

@@ -1,20 +1,15 @@
 ﻿@model mvc_rpg.ViewModel.SearchPlayers
 @{
 }
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="SearchPlayer" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="Search" class="form-control" />
-                <span asp-validation-for="Search" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Search" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="SearchPlayer" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="searchTerm" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
     </div>
-</div>
+</form>
 <style>
     img {
         width:64px;
@@ -33,6 +28,6 @@
             //Converted das ByteArray zu Base64 und converted es in ein bild.
         }
         <img src="@imgSrc" />
-        @player.Name
+        <a asp-action="Details" asp-controller="Players" asp-route-id="@player.ID">@player.Name</a>
     </p>
 }

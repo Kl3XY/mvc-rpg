@@ -31,15 +31,28 @@ namespace mvc_rpg.Controllers
                 return NotFound();
             }
 
+            var detailModel = new mvc_rpg.ViewModel.PlayerDetail();
             var player = await _context.Players
+                .Include(x => x.Items)
+                    .ThenInclude(x => x.ItemType)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+            detailModel.Player = player;
+
+            var graves = _context.Graves
+                .Include(m => m.Player)
+                .Include(m => m.Enemy)
+                .Where(m => m.PlayerID == id)
+                .ToList();
+
+            detailModel.Graves = graves;
 
             if (player == null)
             {
                 return NotFound();
             }
 
-            return View(player);
+            return View(detailModel);
         }
 
         // GET: Players/Create
@@ -112,6 +125,12 @@ namespace mvc_rpg.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( Player player)
         {
+            if (player.Name == "Admin")
+            {
+                HttpContext.Session.SetInt32("user_ID", -1);
+                return Redirect("/Home/Admin");
+            }
+
             if (player.ProfilePictureRaw != null)
             {
                 player.ProfilePicture = GetByteArrayFromImage(player.ProfilePictureRaw);
