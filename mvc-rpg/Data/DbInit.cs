@@ -23,7 +23,7 @@ namespace mvc_rpg.Data
                 return;
             }
 
-            var defaultImage = ImageToByteArray(System.Drawing.Image.FromFile("Default\\img_defaultPicture.jpg"));
+            var defaultImage = ImageToByteArray(System.Drawing.Image.FromFile("wwwroot\\Default\\img_defaultPicture.jpg"));
 
             var players = new Player[]
             {

@@ -2,67 +2,114 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .enemy, .player {
+        width: 50%;
+        float: left;
+        text-align: center;
+    }
+</style>
 
-<a asp-action="Index" asp-controller="Home">Next Fight!</a>
+
+<h1 style="text-align:center"><b style="color:#215f9a">BATTLEGROUND</b></h1>
+<h5 style="text-align:center">See units battle out against the toughest opponents!</h5>
+<hr>
+
+<a asp-action="Index" asp-controller="Home" style="text-align:center">Next Fight!</a>
 <br></br>
 <br></br>
 
 @Html.ValidationMessageFor(m => m.Enemy)
 @Html.ValidationMessageFor(m => m.Player)
 
-@if (Model.Enemy != null)
-{
-    <p>@Model.Enemy.Name <br /> @Model.Enemy.EnemyType.Name</p>
-    <br></br>
-    @if (Model.Enemy.isAlive == true)
-    {
-        <p>WON</p>
-    }
-    else
-    {
-        <p>LOST</p>
-    }
 
-}
+<div class="enemy">
+    @if (Model.Enemy != null)
+    {
+        <p>@Model.Enemy.EnemyType.Name | @Model.Enemy.Name</p>
+        <img src="~/Default/img_defaultPicture.jpg" />
+        <br>
+        @if (Model.Enemy.isAlive == true)
+        {
+            <style>
+                .enemy {
+                    background-color:lightgreen;
+                }
+            </style>
+            <p>WON</p>
+        }
+        else
+        {
+            <style>
+                .enemy {
+                   background-color:lightcoral;
+                }
+            </style>
+            <p>LOST</p>
+        }
+
+    }
+</div>
 
 @if (Model.Player != null)
 {
-    <td>
-        @{
-            var base64 = Convert.ToBase64String(Model.Player.ProfilePicture);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            //Converted das ByteArray zu Base64 und converted es in ein bild.
+    <div class="player">
+            <td>
+            @{
+                var base64 = Convert.ToBase64String(Model.Player.ProfilePicture);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                //Converted das ByteArray zu Base64 und converted es in ein bild.
+            }
+
+            </td>
+
+            <p>@Model.Player.Name </p>
+            <img src="@imgSrc" />
+            <br>
+            @if (Model.Player.isAlive == true)
+            {
+                <style>
+                    .player {
+                        background-color: lightgreen;
+                    }
+                </style>
+                <p>WON</p>
+            }
+            else
+            {
+                <style>
+                    .player {
+                        background-color: lightcoral;
+                    }
+                </style>
+                <p>LOST</p>
+            }
+    </div>
+    <div style="text-align:center">
+        <p>Enemies Slain by this Player:</p>
+        @foreach (var i in Model.PlayerKilledEnemies)
+        {
+            <div>@i.Enemy.Name</div>
         }
-
-    </td>
-
-    <p>@Model.Player.Name <br /> <img src="@imgSrc" /> </p>
-    @if (Model.Player.isAlive == true)
-    {
-        <p>WON</p>
-    }
-    else
-    {
-        <p>LOST</p>
-    }
-    <p>Enemies Slain by this Player:</p>
-    @foreach (var i in Model.PlayerKilledEnemies)
-    {
-        <p>@i.Enemy.Name</p>
-    }
+    </div>
+    
 }
 
-<br></br>
-<br></br>
-<p>COMBAT LOG</p>
 
-@foreach(var i in Model.Graves)
-{
-    @if (i.KilledBy == killedBy.Enemy)
+
+
+<h1 style="text-align:center"><b style="color:#215f9a">COMBAT LOG</b></h1>
+<hr>
+<div style="text-align:center">
+    @foreach (var i in Model.Graves)
     {
-        <p>[@i.DateTime]: @i.Player.Name killed by @i.Enemy.Name</p>
-    } else
-    {
-        <p>[@i.DateTime]: @i.Enemy.Name killed by @i.Player.Name</p>
+        @if (i.KilledBy == killedBy.Enemy)
+        {
+            <p>[@i.DateTime]: @i.Player.Name killed by @i.Enemy.Name</p>
+        }
+        else
+        {
+            <p>[@i.DateTime]: @i.Enemy.Name killed by @i.Player.Name</p>
+        }
     }
-}
+</div>

@@ -38,7 +38,8 @@ namespace mvc_rpg.Controllers
             var random = new Random();
             var enemies = _context.Enemies
                 .Include(m => m.EnemyType)
-                .Where(m => m.isAlive == true);
+                .Where(m => m.isAlive == true)
+                .ToList();
             Enemy eList = null;
             if (enemies.Any())
             {
@@ -50,12 +51,14 @@ namespace mvc_rpg.Controllers
             var graves = _context.Graves
                 .Include(m => m.Enemy)
                 .Include(m => m.Player)
-                .Take(20);
+                .Take(20)
+                .ToList();
                 
 
             var players = _context.Players
                 .Include(m => m.Items)
-                .Where(m => m.isAlive == true);
+                .Where(m => m.isAlive == true)
+                .ToList();
             Player pList = null;
             if (players.Any())
             {
