@@ -5,5 +5,8 @@
     "@spectrum-css/page": "^8.1.1",
     "@spectrum-css/tokens": "^14.1.0",
     "@spectrum-css/typography": "^6.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.3.0"
   }
 }

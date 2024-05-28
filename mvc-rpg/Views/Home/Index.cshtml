@@ -4,17 +4,18 @@
 }
 <style>
     .enemy, .player {
-        width: 50%;
+        width: 40%;
         float: left;
         text-align: center;
+        margin-left: 5%;
+        margin-right: 5%;
+        border-radius: 12px;
     }
 </style>
 
 
-<h1 style="text-align:center"><b style="color:#215f9a">BATTLEGROUND</b></h1>
-<h5 style="text-align:center">See units battle out against the toughest opponents!</h5>
+<h1 class="mb2" style="text-align:center"><b style="color:#0c69f0">Battleground.</h1>
 <hr>
-
 <a asp-action="Index" asp-controller="Home" style="text-align:center">Next Fight!</a>
 <br></br>
 <br></br>
@@ -27,7 +28,7 @@
     @if (Model.Enemy != null)
     {
         <p>@Model.Enemy.EnemyType.Name | @Model.Enemy.Name</p>
-        <img src="~/Default/img_defaultPicture.jpg" width="512" height="512"/>
+        <img src="~/Default/img_defaultPicture.jpg" width="128" height="128" />
         <br>
         @if (Model.Enemy.isAlive == true)
         {
@@ -64,7 +65,7 @@
             </td>
 
             <p>@Model.Player.Name </p>
-            <img src="@imgSrc" width="512" height="512" />
+            <img src="@imgSrc" width="128" height="128" />
             <br>
             @if (Model.Player.isAlive == true)
             {
@@ -98,18 +99,22 @@
 
 
 
-<h1 style="text-align:center"><b style="color:#215f9a">COMBAT LOG</b></h1>
+<h1 class="mb2" style="text-align:center"><b style="color:#0c69f0">Combat Log.</h1>
 <hr>
-<div style="text-align:center">
+<div class="container mt2 text--gray">
     @foreach (var i in Model.Graves)
     {
-        @if (i.KilledBy == killedBy.Enemy)
-        {
-            <p>[@i.DateTime]: @i.Player.Name killed by @i.Enemy.Name</p>
-        }
-        else
-        {
-            <p>[@i.DateTime]: @i.Enemy.Name killed by @i.Player.Name</p>
-        }
+        <div class="grid-column mb2 reveal-on-scroll is-revealing">
+            <div>
+                @if (i.KilledBy == killedBy.Enemy)
+                {
+                    <p>[@i.DateTime]: @i.Player.Name killed by @i.Enemy.Name</p>
+                }
+                else
+                {
+                    <p>[@i.DateTime]: @i.Enemy.Name killed by @i.Player.Name</p>
+                }
+            </div>
+        </div>
     }
 </div>
