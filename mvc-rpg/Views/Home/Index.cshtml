@@ -27,7 +27,7 @@
     @if (Model.Enemy != null)
     {
         <p>@Model.Enemy.EnemyType.Name | @Model.Enemy.Name</p>
-        <img src="~/Default/img_defaultPicture.jpg" />
+        <img src="~/Default/img_defaultPicture.jpg" width="512" height="512"/>
         <br>
         @if (Model.Enemy.isAlive == true)
         {
@@ -64,7 +64,7 @@
             </td>
 
             <p>@Model.Player.Name </p>
-            <img src="@imgSrc" />
+            <img src="@imgSrc" width="512" height="512" />
             <br>
             @if (Model.Player.isAlive == true)
             {
