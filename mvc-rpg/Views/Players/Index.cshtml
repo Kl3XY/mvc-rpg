@@ -22,30 +22,79 @@
     }
 </style>
 
-<h1 style="text-align:center"><b style="color:#215f9a">CREATE A PLAYER</b></h1>
-<h5 style="text-align:center">Send a unit to battle</h5>
+<h1 class="mb2" style="text-align:center"><b style="color:#0c69f0">Create a new player.</b></h1>
 <hr>
-<div class="createContainer">
-    <form asp-action="Create" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+
+<!doctype html>
+<html lang="en-us">
+
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Carta</title>
+    <meta name="description" content="">
+
+    <!-- The compiled CSS file -->
+    <link rel="stylesheet" href="css/production.css">
+
+    <!-- Web fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
+
+    <!-- favicon.ico. Place these in the root directory. -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+</head>
+
+<body class="has-animations">
+    <!-- Header -->
+    <main>
+        <!-- Feature list -->
+        <div class="container pt1 mt2 text--gray align--center">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div class="grid-column mb3 reveal-on-scroll is-revealing">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="grid-column mb3 reveal-on-scroll is-revealing">
+                    <div class="control-label">Profile Picture (max. 512 x 512 px)</div>
+                    <input asp-for="ProfilePictureRaw" />
+                    <span asp-validation-for="ProfilePictureRaw" class="text-danger"></span>
+                </div>
+                <div class="grid-column mb3 reveal-on-scroll is-revealing">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
-        &nbsp;
-        <div class="form-group">
-            <div class="control-label">Profile Picture (max. 512 x 512 px)</div>
-            <input asp-for="ProfilePictureRaw" />
-            <span asp-validation-for="ProfilePictureRaw" class="text-danger"></span>
+    </main>
+
+    <!-- Footer -->
+    <footer class="pt1 pb3 align--center-on-mobile">
+        <div class="container">
+            <div class="grid-row">
+                <div class="grid-column mt2 span-half">
+                    </div>
+                    <p class="small align--center">Design by <a href="https://www.papayatemplates.com" class="link link--text">Papaya</a>. Illustrations from&nbsp;<a href="https://undraw.co/" class="link link--text">Undraw</a>.</p>
+                </div>
+            </div>
         </div>
-        &nbsp;
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </div>
-    </form>
-</div>
+    </footer>
+
+    <!-- Scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+    <!-- The compiled JavaScript file -->
+    <script src="js/production.js"></script>
+
+</body>
+</html>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

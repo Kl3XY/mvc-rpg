@@ -1,19 +1,6 @@
 ﻿@model mvc_rpg.ViewModel.SearchPlayers
 @{
 }
-<h1 style="text-align:center"><b style="color:#215f9a">PLAYERS</b></h1>
-<h5 style="text-align:center">Display all units</h5>
-<hr>
-
-<a asp-controller="Players" asp-action="Index">Create</a>
-<form asp-action="SearchPlayer" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by name: <input type="text" name="searchTerm" />
-            <input type="submit" value="Search" class="btn btn-default" /> 
-        </p>
-    </div>
-</form>
 <style>
     img {
         width:64px;
@@ -22,16 +9,86 @@
 
 </style>
 
+<h1 class="mb2" style="text-align:center"><b style="color:#0c69f0">Search through all players.</b></h1>
+<hr>
 
-@foreach(var player in Model.Players)
-{
-    <p>
-        @{
-            var base64 = Convert.ToBase64String(player.ProfilePicture);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            //Converted das ByteArray zu Base64 und converted es in ein bild.
-        }
-        <img src="@imgSrc" />
-        <a asp-action="Details" asp-controller="Players" asp-route-id="@player.ID">@player.Name</a>
-    </p>
+<!doctype html>
+<html lang="en-us">
+
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Carta</title>
+    <meta name="description" content="">
+
+    <!-- The compiled CSS file -->
+    <link rel="stylesheet" href="css/production.css">
+
+    <!-- Web fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
+
+    <!-- favicon.ico. Place these in the root directory. -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+</head>
+<a asp-controller="Players" asp-action="Index">Create</a>
+<form asp-action="SearchPlayer" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="searchTerm" />
+            <input type="submit" value="Search" class="btn btn-default" />
+        </p>
+    </div>
+</form>
+<body class="has-animations">
+    <!-- Header -->
+    <main>
+        <!-- Feature list -->
+        <div class="container pt1 mt2 text--gray align--center">
+            @foreach (var player in Model.Players)
+            {
+                <div class="grid-column mb3 reveal-on-scroll is-revealing">
+                    <p>
+                        @{
+                            var base64 = Convert.ToBase64String(player.ProfilePicture);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            //Converted das ByteArray zu Base64 und converted es in ein bild.
+                        }
+                        <img src="@imgSrc" />
+                        <a asp-action="Details" asp-controller="Players" asp-route-id="@player.ID">@player.Name</a>
+                    </p>
+                </div>
+            }     
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="pt1 pb3 align--center-on-mobile">
+        <div class="container">
+            <div class="grid-row">
+                <div class="grid-column mt2 span-half">
+                </div>
+                <p class="small align--center">Design by <a href="https://www.papayatemplates.com" class="link link--text">Papaya</a>. Illustrations from&nbsp;<a href="https://undraw.co/" class="link link--text">Undraw</a>.</p>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- Scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+    <!-- The compiled JavaScript file -->
+    <script src="js/production.js"></script>
+
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
