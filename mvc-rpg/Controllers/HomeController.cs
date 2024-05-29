@@ -165,18 +165,34 @@ namespace mvc_rpg.Controllers
 
             return View(newObj);
         }
-        public IActionResult HallOfFame()
+        public IActionResult HallOfFame(string searchTerm = "", int page = 0)
         {
             var graves = _context.Graves
                 .Include(m => m.Enemy)
                 .Include(m => m.Player)
                 .Where(m => m.KilledBy != killedBy.Enemy)
+                .OrderBy(m => m.DateTime)
+                .Take(100)
                 .GroupBy(m => m.Player)
                 .ToList();
 
+            if (graves.Count() >= 100)
+            {
+                HttpContext.Session.SetInt32("canTurn", 1);
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("canTurn", 0);
+            }
+
             graves = graves.OrderByDescending(m => m.Count()).ToList();
 
-            return View(graves);
+            var HoE = new HallOfFame();
+            HoE.Entries = graves;
+            HoE.Search = searchTerm;
+            HoE.page = page;
+
+            return View(HoE);
         }
 
         public IActionResult Logout()

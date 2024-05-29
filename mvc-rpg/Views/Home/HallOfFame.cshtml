@@ -1,4 +1,4 @@
-﻿@model List<System.Linq.IGrouping<mvc_rpg.Models.Player, mvc_rpg.Models.Grave>>
+﻿@model mvc_rpg.ViewModel.HallOfFame;
 @{
 }
 <style>
@@ -10,11 +10,21 @@
 </style>
 
 <h1 class="mb2" style="text-align:center"><b style="color:#0c69f0">Hall of fame.</h1>
+<h3 style="text-align:center">Measuring the last 100 kills.</h3>
 <hr>
 
+@if (Model.page != 0)
+{
+    <a asp-action="HallOfFame" asp-route-searchTerm="@Model.Search" asp-route-page="@Model.subtractFromPage(Model.page)">◄</a>
+}
+<span>@Model.page</span>
+@if (Context.Session.GetInt32("canTurn") == 1)
+{
+    <a asp-action="HallOfFame" asp-route-searchTerm="@Model.Search" asp-route-page="@Model.addToPage(Model.page)">►</a>
+}
 
 <div class="container mt2 text--gray">
-    @foreach (var player in Model)
+    @foreach (var player in Model.Entries)
     {
         <div class="grid-column mb2 reveal-on-scroll is-revealing">
             <div>
