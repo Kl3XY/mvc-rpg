@@ -5,6 +5,7 @@ using mvc_rpg.Data;
 using mvc_rpg.Models;
 using mvc_rpg.ViewModel;
 using System;
+using PagedList;
 using System.Diagnostics;
 
 namespace mvc_rpg.Controllers
@@ -140,15 +141,27 @@ namespace mvc_rpg.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchPlayer(string searchTerm = "")
+        public IActionResult SearchPlayer(string searchTerm = "", int page = 0)
         {
             var players = _context.Players
                 .Include(m => m.Items)
-                .Where(m => m.Name.Contains(searchTerm));
+                .Where(m => m.Name.StartsWith(searchTerm))
+                .Skip(10 * page)
+                .Take(10)
+                .ToList();
+
+            if (players.Count() >= 10)
+            {
+                HttpContext.Session.SetInt32("canTurn", 1);
+            } else
+            {
+                HttpContext.Session.SetInt32("canTurn", 0);
+            }
 
             var newObj = new SearchPlayers();
             newObj.Players = players.ToList();
             newObj.Search = searchTerm;
+            newObj.page = page;
 
             return View(newObj);
         }

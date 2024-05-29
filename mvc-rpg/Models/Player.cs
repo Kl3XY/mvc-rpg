@@ -1,9 +1,11 @@
 ﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 
 namespace mvc_rpg.Models
 {
+    [Index(nameof(Name))]
     public class Player
     {
         public int ID { get; set; }

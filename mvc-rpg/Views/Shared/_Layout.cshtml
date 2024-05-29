@@ -36,6 +36,17 @@
         .main {
             width: 60%;
             float: left;
+            align-self: center;
+        }
+
+        @@media screen and (max-width: 992px) {
+          .right, .left {
+            width: 0%;
+          }
+
+        .main {
+            width: 100%;
+        }
         }
     </style>
 
@@ -80,7 +91,7 @@
                 </div>
             </div>
         </nav>
-
+        <p class="small align--center">Creative Commons License. Design by <a href="https://www.papayatemplates.com" class="link link--text">Papaya</a>.</p>
     </header>
     <div class="left">&nbsp;</div>
     <div class="main">
@@ -103,14 +114,3 @@
 
 </body>
 </html>
-
-<!-- Footer -->
-<footer class="pt1 pb3 align--center-on-mobile">
-    <div class="container">
-        <div class="grid-row">
-            <div class="grid-column mt2 span-half">
-            </div>
-            <p class="small align--center">Creative Commons License. Design by <a href="https://www.papayatemplates.com" class="link link--text">Papaya</a>. Illustrations from&nbsp;<a href="https://undraw.co/" class="link link--text">Undraw</a>.</p>
-        </div>
-    </div>
-</footer>
