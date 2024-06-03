@@ -1,7 +1,8 @@
 ﻿using Azure;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
+using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Http;
 
 namespace mvc_rpg.Models
 {

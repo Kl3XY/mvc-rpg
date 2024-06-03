@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using mvc_rpg.Models;
 
 namespace mvc_rpg.Data

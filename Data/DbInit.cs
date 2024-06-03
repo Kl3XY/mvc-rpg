@@ -1,4 +1,5 @@
 ﻿using mvc_rpg.Models;
+using System.Drawing;
 
 namespace mvc_rpg.Data
 {
@@ -12,7 +13,6 @@ namespace mvc_rpg.Data
                 return ms.ToArray();
             }
         }
-
 
         public static void seed(RPGContext context)
         {
