@@ -15,10 +15,10 @@
 
 
 <h1 class="mb2" style="text-align:center"><b style="color:#0c69f0">Battleground.</h1>
-<hr>
+<hr/>
 <a asp-action="Index" asp-controller="Home" style="text-align:center">Next Fight!</a>
-<br></br>
-<br></br>
+<br/>
+<br/>
 
 @Html.ValidationMessageFor(m => m.Enemy)
 @Html.ValidationMessageFor(m => m.Player)
@@ -55,14 +55,11 @@
 @if (Model.Player != null)
 {
     <div class="player">
-            <td>
             @{
                 var base64 = Convert.ToBase64String(Model.Player.ProfilePicture);
                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                 //Converted das ByteArray zu Base64 und converted es in ein bild.
             }
-
-            </td>
 
             <p>@Model.Player.Name </p>
             <img src="@imgSrc" width="128" height="128" />
