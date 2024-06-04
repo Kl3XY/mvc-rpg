@@ -11,13 +11,13 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EnemiesController : ControllerBase
+    public class ItemController : ControllerBase
     {
-        private readonly ILogger<EnemiesController> _logger;
+        private readonly ILogger<PlayerController> _logger;
         private readonly IMapper _mapper;
         private readonly RPGContext _context;
 
-        public EnemiesController(ILogger<EnemiesController> logger, RPGContext context, IMapper mapper)
+        public ItemController(ILogger<PlayerController> logger, RPGContext context, IMapper mapper)
         {
             _mapper = mapper;
             _logger = logger;
@@ -27,10 +27,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Read()
         {
-            var enemies = await _context.Enemies.ToListAsync();
-            var mappedEnemy = _mapper.Map<List<mvc_rpg.Entities.Enemy>, List<Models.Enemy>>(enemies);
+            var items = await _context.Items.ToListAsync();
+            var mappedItems = _mapper.Map<List<mvc_rpg.Entities.Item>, List<Models.Item>>(items);
 
-            return Ok(mappedEnemy);
+            return Ok(mappedItems);
         }
 
         [HttpGet]
@@ -42,41 +42,41 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            var enemy = await _context.Enemies.FirstOrDefaultAsync(m => m.ID == id);
-            var mappedEnemy = _mapper.Map<Models.Enemy>(enemy);
+            var item = await _context.Items.FirstOrDefaultAsync(m => m.ID == id);
+            var mappedItem = _mapper.Map<Models.Item>(item);
             
-            if (enemy == null)
+            if (item == null)
             {
-                return NotFound("The given id didn't yield any enemies");
+                return NotFound("The given id didn't yield any item");
             }
 
-            return Ok(mappedEnemy);
+            return Ok(mappedItem);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Models.Enemy enemy)
+        public async Task<IActionResult> Create(Models.Item Item)
         {
-            await _context.Enemies.AddAsync(_mapper.Map<mvc_rpg.Entities.Enemy>(enemy));
+            await _context.Items.AddAsync(_mapper.Map<mvc_rpg.Entities.Item>(Item));
             _context.SaveChanges();
 
-            return Ok(enemy);
+            return Ok(Item);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(Models.Enemy enemy, [FromRoute]int id)
+        public async Task<IActionResult> Update(Models.Item item, [FromRoute]int id)
         {
-            enemy.ID = id;
+            item.ID = id;
 
-            if (enemy.EnemyTypeID <= 0 || id <= 0)
+            if (id <= 0)
             {
                 return BadRequest();
             }
 
-            _context.Update(_mapper.Map<mvc_rpg.Entities.Enemy>(enemy));
+            _context.Update(_mapper.Map<mvc_rpg.Entities.Item>(item));
             _context.SaveChanges();
             
-            return Ok(enemy);
+            return Ok(item);
         }
 
         [HttpDelete]
@@ -87,14 +87,14 @@ namespace API.Controllers
                 return BadRequest("Invalid ID");
             }
 
-            var enemy = _context.Enemies.FirstOrDefault(m => m.ID == id);
+            var item = await _context.Items.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (enemy == null)
+            if (item == null)
             {
                 return NotFound("The given id didn't yield any item");
             }
 
-            _context.Enemies.Remove(enemy);
+            _context.Items.Remove(item);
             _context.SaveChanges();
             
             return Ok("Entry Deleted Successfully");

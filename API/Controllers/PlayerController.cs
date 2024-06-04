@@ -89,6 +89,11 @@ namespace API.Controllers
 
             var player = _context.Players.FirstOrDefault(m => m.ID == id);
 
+            if (player == null)
+            {
+                return NotFound("The given id didn't yield any item");
+            }
+
             _context.Players.Remove(player);
             _context.SaveChanges();
             
