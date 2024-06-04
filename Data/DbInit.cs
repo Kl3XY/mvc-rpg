@@ -1,4 +1,4 @@
-﻿using mvc_rpg.Models;
+﻿using mvc_rpg.Entities;
 using System.Drawing;
 
 namespace mvc_rpg.Data

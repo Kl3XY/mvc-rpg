@@ -1,4 +1,4 @@
-﻿using mvc_rpg.Models;
+﻿using mvc_rpg.Entities;
 
 namespace mvc_rpg.ViewModel
 {
@@ -6,7 +6,7 @@ namespace mvc_rpg.ViewModel
     {
         public string Search = "";
         public int page = 0;
-        public List<System.Linq.IGrouping<mvc_rpg.Models.Player, mvc_rpg.Models.Grave>> Entries { get; set; }
+        public List<System.Linq.IGrouping<mvc_rpg.Entities.Player, mvc_rpg.Entities.Grave>> Entries { get; set; }
 
         public int addToPage(int num)
         {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing.Imaging;
 using Microsoft.AspNetCore.Http;
 
-namespace mvc_rpg.Models
+namespace mvc_rpg.Entities
 {
     [Index(nameof(Name))]
     public class Player

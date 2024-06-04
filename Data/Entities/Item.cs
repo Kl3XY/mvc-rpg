@@ -1,4 +1,4 @@
-﻿namespace mvc_rpg.Models
+﻿namespace mvc_rpg.Entities
 {
     public class Item
     {

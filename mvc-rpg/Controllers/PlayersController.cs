@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using mvc_rpg.Data;
-using mvc_rpg.Models;
+using mvc_rpg.Entities;
 
 namespace mvc_rpg.Controllers
 {

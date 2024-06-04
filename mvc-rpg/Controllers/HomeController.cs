@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using mvc_rpg.Data;
-using mvc_rpg.Models;
+using mvc_rpg.Entities;
 using mvc_rpg.ViewModel;
 using System;
 using PagedList;

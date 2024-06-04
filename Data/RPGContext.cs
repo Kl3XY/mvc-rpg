@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using mvc_rpg.Models;
+using mvc_rpg.Entities;
 
 namespace mvc_rpg.Data
 {

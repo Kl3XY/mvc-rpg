@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mvc-rpg", "mvc-rpg\mvc-rpg.csproj", "{B9FDEB74-427B-42C3-AA53-2452B3CE82BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{AA3EE586-7202-472F-8FA0-1D77CC018F60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{AA3EE586-7202-472F-8FA0-1D77CC018F60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{DF60E2AE-043D-46CE-BA10-AAD31ED7A28E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{AA3EE586-7202-472F-8FA0-1D77CC018F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA3EE586-7202-472F-8FA0-1D77CC018F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA3EE586-7202-472F-8FA0-1D77CC018F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF60E2AE-043D-46CE-BA10-AAD31ED7A28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF60E2AE-043D-46CE-BA10-AAD31ED7A28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF60E2AE-043D-46CE-BA10-AAD31ED7A28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF60E2AE-043D-46CE-BA10-AAD31ED7A28E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
