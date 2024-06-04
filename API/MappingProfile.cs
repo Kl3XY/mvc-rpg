@@ -11,6 +11,12 @@ namespace API
                 .ReverseMap();
             CreateMap<mvc_rpg.Entities.Item, Models.Item>()
                 .ReverseMap();
+            CreateMap<mvc_rpg.Entities.ItemType, Models.ItemType>()
+                .ReverseMap();
+            CreateMap<mvc_rpg.Entities.EnemyType, Models.EnemyType>()
+                .ReverseMap();
+            CreateMap<mvc_rpg.Entities.Grave, Models.Grave>()
+                .ReverseMap();
         }
     }
 }
