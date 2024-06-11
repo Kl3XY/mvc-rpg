@@ -5,19 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using mvc_rpg.Data;
 using mvc_rpg.Entities;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ItemTypeController : ControllerBase
+    public class ItemsController : ControllerBase
     {
-        private readonly ILogger<PlayerController> _logger;
+        private readonly ILogger<PlayersController> _logger;
         private readonly IMapper _mapper;
         private readonly RPGContext _context;
 
-        public ItemTypeController(ILogger<PlayerController> logger, RPGContext context, IMapper mapper)
+        public ItemsController(ILogger<PlayersController> logger, RPGContext context, IMapper mapper)
         {
             _mapper = mapper;
             _logger = logger;
@@ -27,10 +28,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Read()
         {
-            var itemTypes = await _context.ItemTypes.ToListAsync();
-            var mappedItemTypes = _mapper.Map<List<mvc_rpg.Entities.ItemType>, List<Models.ItemType>>(itemTypes);
+            var items = await _context.Items.ToListAsync();
+            var mappedItems = _mapper.Map<List<mvc_rpg.Entities.Item>, List<Models.Item>>(items);
 
-            return Ok(mappedItemTypes);
+            return Ok(mappedItems);
         }
 
         [HttpGet]
@@ -42,41 +43,48 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            var itemType = await _context.ItemTypes.FirstOrDefaultAsync(m => m.ID == id);
-            var mappedItemType = _mapper.Map<Models.ItemType>(itemType);
+            var item = await _context.Items.FirstOrDefaultAsync(m => m.ID == id);
+            var mappedItem = _mapper.Map<Models.Item>(item);
             
-            if (itemType == null)
+            if (item == null)
             {
                 return NotFound("The given id didn't yield any item");
             }
 
-            return Ok(mappedItemType);
+            return Ok(mappedItem);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Models.ItemType ItemType)
+        public async Task<IActionResult> Create(Models.Item Item)
         {
-            await _context.ItemTypes.AddAsync(_mapper.Map<mvc_rpg.Entities.ItemType>(ItemType));
+            await _context.Items.AddAsync(_mapper.Map<mvc_rpg.Entities.Item>(Item));
             _context.SaveChanges();
 
-            return Ok(ItemType);
+            return Ok(Item);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(Models.ItemType itemType, [FromRoute]int id)
+        public async Task<IActionResult> Update(Models.Item item, [FromRoute]int id)
         {
-            itemType.ID = id;
+            item.ID = id;
 
             if (id <= 0)
             {
                 return BadRequest();
             }
 
-            _context.Update(_mapper.Map<mvc_rpg.Entities.ItemType>(itemType));
-            _context.SaveChanges();
+            try
+            {
+                _context.Update(_mapper.Map<mvc_rpg.Entities.Item>(item));
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return NotFound("The given id didn't yield any items");
+            }
             
-            return Ok(itemType);
+            return Ok(item);
         }
 
         [HttpDelete]
@@ -87,14 +95,14 @@ namespace API.Controllers
                 return BadRequest("Invalid ID");
             }
 
-            var itemType = await _context.ItemTypes.FirstOrDefaultAsync(m => m.ID == id);
+            var item = await _context.Items.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (itemType == null)
+            if (item == null)
             {
                 return NotFound("The given id didn't yield any item");
             }
 
-            _context.ItemTypes.Remove(itemType);
+            _context.Items.Remove(item);
             _context.SaveChanges();
             
             return Ok("Entry Deleted Successfully");

@@ -11,13 +11,13 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ItemController : ControllerBase
+    public class ItemTypesController : ControllerBase
     {
-        private readonly ILogger<PlayerController> _logger;
+        private readonly ILogger<PlayersController> _logger;
         private readonly IMapper _mapper;
         private readonly RPGContext _context;
 
-        public ItemController(ILogger<PlayerController> logger, RPGContext context, IMapper mapper)
+        public ItemTypesController(ILogger<PlayersController> logger, RPGContext context, IMapper mapper)
         {
             _mapper = mapper;
             _logger = logger;
@@ -27,10 +27,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Read()
         {
-            var items = await _context.Items.ToListAsync();
-            var mappedItems = _mapper.Map<List<mvc_rpg.Entities.Item>, List<Models.Item>>(items);
+            var itemTypes = await _context.ItemTypes.ToListAsync();
+            var mappedItemTypes = _mapper.Map<List<mvc_rpg.Entities.ItemType>, List<Models.ItemType>>(itemTypes);
 
-            return Ok(mappedItems);
+            return Ok(mappedItemTypes);
         }
 
         [HttpGet]
@@ -42,41 +42,50 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            var item = await _context.Items.FirstOrDefaultAsync(m => m.ID == id);
-            var mappedItem = _mapper.Map<Models.Item>(item);
+            var itemType = await _context.ItemTypes.FirstOrDefaultAsync(m => m.ID == id);
+            var mappedItemType = _mapper.Map<Models.ItemType>(itemType);
             
-            if (item == null)
+            if (itemType == null)
             {
                 return NotFound("The given id didn't yield any item");
             }
 
-            return Ok(mappedItem);
+            return Ok(mappedItemType);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Models.Item Item)
+        public async Task<IActionResult> Create(Models.ItemType ItemType)
         {
-            await _context.Items.AddAsync(_mapper.Map<mvc_rpg.Entities.Item>(Item));
+            await _context.ItemTypes.AddAsync(_mapper.Map<mvc_rpg.Entities.ItemType>(ItemType));
             _context.SaveChanges();
 
-            return Ok(Item);
+            return Ok(ItemType);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(Models.Item item, [FromRoute]int id)
+        public async Task<IActionResult> Update(Models.ItemType itemType, [FromRoute]int id)
         {
-            item.ID = id;
+            itemType.ID = id;
 
             if (id <= 0)
             {
                 return BadRequest();
             }
 
-            _context.Update(_mapper.Map<mvc_rpg.Entities.Item>(item));
-            _context.SaveChanges();
+            try
+            {
+                _context.Update(_mapper.Map<mvc_rpg.Entities.ItemType>(itemType));
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return NotFound("The given id didn't yield any itemType");
+            }
+
+
             
-            return Ok(item);
+            return Ok(itemType);
         }
 
         [HttpDelete]
@@ -87,14 +96,14 @@ namespace API.Controllers
                 return BadRequest("Invalid ID");
             }
 
-            var item = await _context.Items.FirstOrDefaultAsync(m => m.ID == id);
+            var itemType = await _context.ItemTypes.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (item == null)
+            if (itemType == null)
             {
                 return NotFound("The given id didn't yield any item");
             }
 
-            _context.Items.Remove(item);
+            _context.ItemTypes.Remove(itemType);
             _context.SaveChanges();
             
             return Ok("Entry Deleted Successfully");

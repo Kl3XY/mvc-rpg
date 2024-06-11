@@ -11,13 +11,13 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GraveController : ControllerBase
+    public class GravesController : ControllerBase
     {
-        private readonly ILogger<PlayerController> _logger;
+        private readonly ILogger<PlayersController> _logger;
         private readonly IMapper _mapper;
         private readonly RPGContext _context;
 
-        public GraveController(ILogger<PlayerController> logger, RPGContext context, IMapper mapper)
+        public GravesController(ILogger<PlayersController> logger, RPGContext context, IMapper mapper)
         {
             _mapper = mapper;
             _logger = logger;
@@ -53,6 +53,27 @@ namespace API.Controllers
             return Ok(mappedGrave);
         }
 
+        [HttpGet("HallOfFame")]
+        public async Task<IActionResult> HallOfFame()
+        {
+            var graves = _context.Graves
+                .Where(m => m.KilledBy != mvc_rpg.Entities.killedBy.Enemy)
+                .OrderBy(m => m.DateTime)
+                .Take(100)
+                .ToList();
+
+            var mappedGraves = _mapper.Map<List<mvc_rpg.Entities.Grave>, List<Models.Grave>>(graves);
+
+            if (graves == null)
+            {
+                return NotFound("Hall of fame is empty");
+            }
+
+            var grouped = mappedGraves.GroupBy(m => m.PlayerID);
+
+            return Ok(grouped);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(Models.Grave grave)
         {
@@ -73,8 +94,15 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Update(_mapper.Map<mvc_rpg.Entities.Grave>(grave));
-            _context.SaveChanges();
+            try
+            {
+                _context.Update(_mapper.Map<mvc_rpg.Entities.Grave>(grave));
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return NotFound("The given id didn't yield any graves");
+            }
             
             return Ok(grave);
         }

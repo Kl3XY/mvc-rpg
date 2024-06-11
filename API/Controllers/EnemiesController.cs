@@ -73,8 +73,15 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Update(_mapper.Map<mvc_rpg.Entities.Enemy>(enemy));
-            _context.SaveChanges();
+            try
+            {
+                _context.Update(_mapper.Map<mvc_rpg.Entities.Enemy>(enemy));
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return NotFound("The given id didn't yield any enemy");
+            }
             
             return Ok(enemy);
         }

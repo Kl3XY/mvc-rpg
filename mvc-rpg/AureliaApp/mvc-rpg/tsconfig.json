@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "target": "ES2017",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "sourceMap": true,
+
+    "paths": {
+      "tslib": [ "C:\\Users\\Martinga\\source\\repos\\mvc-rpg-aktuell\\mvc-rpg\\AureliaApp\\mvc-rpg-new\\node_modules\\tslib\\tslib.d.ts" ],
+      "aurelia": [ "C:\\Users\\Martinga\\source\\repos\\mvc-rpg-aktuell\\mvc-rpg\\AureliaApp\\mvc-rpg-new\\node_modules\\aurelia\\dist\\types\\index.d.ts" ],
+    }
+  },
+  "include": [
+    "test",
+    "src"
+  ],
+  "files": [
+    "src/resource.d.ts"
+  ]
+}

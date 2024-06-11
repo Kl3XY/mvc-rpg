@@ -1,0 +1,38 @@
+<style>
+    ul {
+        list-style-type: none; 
+    }
+
+    li {
+        margin-bottom: 15px;
+    }
+
+</style>
+
+<h1 class="mb2" style="text-align:center"><b>Search Players</b></h1>
+
+<div style="align-content: center">
+    <div class="grid-column mb3">
+        <label for="name">Search</label>
+        <input id="name" name="name" class="form-control" value.bind="name" />
+    </div>
+    <div style="text-align:center">
+        <span class="grid-column mb3">
+            <a class="btn btn--default" load="welcome-page">Create New</a>
+        </span>
+        <span class="grid-column mb3">
+            <input value="Search" class="btn btn--default" click.trigger="search()" />
+        </span>
+    </div>
+</div>
+
+
+
+<div class="container mt2 text--gray">
+    <ul>
+        <li repeat.for="e of player">
+            <img src="data:image/png;base64, ${e.profilePicture}" style="width:64px; height:64px;" />
+            ${e.name}
+        </li>
+    </ul>
+</div>

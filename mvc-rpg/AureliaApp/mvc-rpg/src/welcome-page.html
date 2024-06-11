@@ -1,0 +1,26 @@
+<h1 class="mb2" style="text-align:center"><b>Create a new player.</b></h1>
+
+<div class="container pt1 mt2 text--gray align--center">
+    <form method="post" enctype="multipart/form-data" style="text-align: center;">
+        <div class="grid-column mb3">
+            <label for="name">Name</label>
+            <input id="name" name="name" class="form-control" value.bind="name" />
+        </div>
+        <div class="grid-column mb3">
+            <label for="file">Profile Picture</label>
+            <input id="file" name="file" type="file" />
+        </div>
+        <div class="grid-column mb3">
+            <input type="submit" value="Create" class="btn btn--default" click.trigger="create()" />
+        </div>
+    </form>
+</div>
+
+<!--
+<ul>
+    <li repeat.for="e of player">Name: ${e.name}
+        <img src="data:image/png;base64, ${e.profilePicture}" alt="Unable to decode base64" style="width:64px; height:64px;"/>
+
+    </li>
+</ul>
+    -->

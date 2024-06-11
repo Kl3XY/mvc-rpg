@@ -34,6 +34,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(
+    options => options.WithOrigins("http://localhost:9001")
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+
+);
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

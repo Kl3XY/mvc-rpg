@@ -13,11 +13,11 @@ namespace API.Controllers
     [Route("[controller]")]
     public class EnemyTypeController : ControllerBase
     {
-        private readonly ILogger<PlayerController> _logger;
+        private readonly ILogger<PlayersController> _logger;
         private readonly IMapper _mapper;
         private readonly RPGContext _context;
 
-        public EnemyTypeController(ILogger<PlayerController> logger, RPGContext context, IMapper mapper)
+        public EnemyTypeController(ILogger<PlayersController> logger, RPGContext context, IMapper mapper)
         {
             _mapper = mapper;
             _logger = logger;
@@ -73,8 +73,15 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Update(_mapper.Map<mvc_rpg.Entities.EnemyType>(enemyType));
-            _context.SaveChanges();
+            try
+            {
+                _context.Update(_mapper.Map<mvc_rpg.Entities.EnemyType>(enemyType));
+                _context.SaveChanges();
+            } catch
+            {
+                return NotFound("The given id didn't yield any item");
+            }
+            
             
             return Ok(enemyType);
         }
