@@ -27,11 +27,12 @@ namespace mvc_rpg.Data
 
             var players = new Player[]
             {
-                new Player{Name="Kl3XY", isAlive=true }, 
-                new Player{Name="Yooo", isAlive=true}, 
-                new Player{Name="Doomer", isAlive=true}, 
-                new Player{Name="Ner", isAlive=true}, 
-                new Player{Name="Bro", isAlive=true}
+                new Player{Name="Kl3XY", Health = 100, isAlive=true, skinType = skinType.white, hairType = hairType.Afro }, 
+                new Player{Name="Yooo", Health = 100, isAlive=true, skinType = skinType.white, hairType = hairType.Afro}, 
+                new Player{Name="Doomer", Health = 100, isAlive=true, skinType = skinType.white, hairType = hairType.Afro}, 
+                new Player{Name="Ner", Health = 100, isAlive=true, skinType = skinType.white, hairType = hairType.Afro}, 
+                new Player{Name="Bro", Health = 100, isAlive=true, skinType = skinType.white, hairType = hairType.Afro},
+                new Player{Name="New Bro", Health = 100, isAlive=true, skinType = skinType.white, hairType = hairType.Afro},
             };
             foreach (Player s in players)
             {
@@ -47,7 +48,8 @@ namespace mvc_rpg.Data
                 new ItemType{Name="Collectible"},
                 new ItemType{Name="Gold"},
                 new ItemType{Name="Furniture"},
-                new ItemType{Name="Trash"}
+                new ItemType{Name="Trash"},
+                new ItemType{Name="Weapon"},
             };
             foreach (var s in itemType)
             {
@@ -66,6 +68,8 @@ namespace mvc_rpg.Data
                 new Item{Name="Table", ItemTypeID = 3},
                 new Item{Name="Chair", ItemTypeID = 3},
                 new Item{Name="Candles", ItemTypeID = 3},
+                new Item{Name="Sharpened Axe of the Blood Emperor", ItemTypeID = 5, Attack = 403, rarity = rarity.legendary, effectID = 1},
+                new Item{Name="Frozen Kings Blade", ItemTypeID = 5, Attack = 320, rarity = rarity.legendary, effectID = 2},
             };
 
             foreach (Item s in items)
@@ -90,11 +94,11 @@ namespace mvc_rpg.Data
 
             var enemy = new Enemy[]
             {
-                new Enemy{Name="Goblin", EnemyTypeID=1, isAlive=true},
-                new Enemy{Name="Golem", EnemyTypeID=3, isAlive=true},
-                new Enemy{Name="Rogue", EnemyTypeID=1, isAlive=true},
-                new Enemy{Name="Thief", EnemyTypeID=1, isAlive=true},
-                new Enemy{Name="Monster", EnemyTypeID=2, isAlive=true}
+                new Enemy{Name="Goblin", EnemyTypeID=1, isAlive=true, DroppableItemID = 8},
+                new Enemy{Name="Golem", EnemyTypeID=3, isAlive=true, DroppableItemID = 8},
+                new Enemy{Name="Rogue", EnemyTypeID=1, isAlive=true, DroppableItemID = 8},
+                new Enemy{Name="Thief", EnemyTypeID=1, isAlive=true, DroppableItemID = 8},
+                new Enemy{Name="Monster", EnemyTypeID=2, isAlive=true, DroppableItemID = 8}
             };
             foreach (var s in enemy)
             {

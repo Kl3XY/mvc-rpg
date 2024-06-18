@@ -1,0 +1,94 @@
+<style>
+    ul {
+        list-style-type: none;
+    }
+
+    li {
+        margin-bottom: 15px;
+    }
+
+    .enemy, .player {
+        width: 40%;
+        float: left;
+        text-align: center;
+        margin-left: 5%;
+        margin-right: 5%;
+        border-radius: 12px;
+    }
+
+    .won {
+        background-color: lightgreen;
+    }
+
+    .lost {
+        background-color: lightcoral;
+    }
+    
+    .topSplit, .botSplit
+    {
+
+    }
+</style>
+
+<h1 class="mb2" style="text-align:center"><b>Battleground</b></h1>
+<div class="topSplit">
+    <div class="container mt2 text--gray">
+        <div if.bind="selectedEnemy.isAlive == true">
+            <div class="enemy won">
+                ${selectedEnemy.name} </br>
+                <img src="../wwwroot/Default/img_defaultPicture.jpg" width="128" height="128" />
+            </div>
+        </div>
+        <div else.bind="selectedEnemy.isAlive == true">
+            <div class="enemy lost">
+                ${selectedEnemy.name} </br>
+                <img src="../wwwroot/Default/img_defaultPicture.jpg" width="128" height="128" />
+            </div>
+        </div>
+        <div if.bind="selectedPlayer.isAlive == true">
+            <div class="player won">
+                ${selectedPlayer.name} </br>
+                <img src="data:image/png;base64, ${selectedPlayer.profilePicture}" style="width:128px; height:128px;" />
+            </div>
+        </div>
+        <div else.bind="selectedPlayer.isAlive == true">
+            <div class="player lost">
+                ${selectedPlayer.name} </br>
+                <img src="data:image/png;base64, ${selectedPlayer.profilePicture}" style="width:128px; height:128px;" />
+            </div>
+        </div>
+    </div>
+
+    <div if.bind="selectedPlayer == undefined">
+        <div class="player lost">
+            All Players have been defeated!
+        </div>
+    </div>
+    <div if.bind="selectedEnemy == undefined">
+        <div class="enemy lost">
+            All Enemies have been defeated!
+        </div>
+    </div>
+</div>
+<div class="botSplit">
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    <h1 class="mb2" style="text-align:center"><b>Combat Log.</b></h1>
+    <hr>
+    <ul>
+        <li repeat.for="c of combatLog">
+            <div if.bind="c.killedBy == 0">
+                [${c.dateTime}]: ${c.player.name} killed ${c.enemy.name}
+            </div>
+            <div if.bind="c.killedBy == 1">
+                [${c.dateTime}]: ${c.enemy.name} killed ${c.player.name} 
+            </div>
+
+        </li>
+    </ul>
+</div>

@@ -9,6 +9,8 @@ namespace API
                 .ReverseMap();
             CreateMap<mvc_rpg.Entities.Player, Models.Player>()
                 .ReverseMap();
+            CreateMap<mvc_rpg.Entities.Player, Models.PlayerItem>()
+                .ReverseMap();
             CreateMap<mvc_rpg.Entities.Item, Models.Item>()
                 .ReverseMap();
             CreateMap<mvc_rpg.Entities.ItemType, Models.ItemType>()

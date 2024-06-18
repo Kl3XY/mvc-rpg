@@ -12,5 +12,7 @@ namespace mvc_rpg.Entities
         public int EnemyTypeID { get; set; }
         [IgnoreDataMember]
         public EnemyType EnemyType { get; set; }
+        public int DroppableItemID { get; set; }
+        public Item DroppableItem { get; set; }
     }
 }

@@ -8,10 +8,8 @@ class Player {
     id: number = 0
     isAlive: boolean
     ProfilePicture: string;
-
-    testFunc(){
-        console.log("Hello! from " + this.name);
-    }
+    skinType: number;
+    hairType: number;
 }
 
 @inject(newInstanceOf(IHttpClient))
@@ -26,15 +24,22 @@ export class Players implements IRouteableComponent {
 
     async createNewPlayer() {
         console.log("yoooo");
-        await this.router.redirect('/');
     }
 
     search() {
         this.player = [];
         console.log("API Init")
-        this.http.fetch("https://localhost:7122/Players/Search/" + this.name)
+        let search: string;
+        if (this.name != '') {
+            search = "https://localhost:7122/Players/Search/" + this.name;
+        } else {
+            search = "https://localhost:7122/Players";
+        }
+        console.log(search);
+        this.http.fetch(search)
             .then(rsp => rsp.json())
-            .then(json => { this.player = (json as Player[]) })
+            .then(json => { this.player = (json as Player[]); console.log(this.player) })
+
 
 
         console.log("API Done!")

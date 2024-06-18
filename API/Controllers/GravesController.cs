@@ -69,9 +69,7 @@ namespace API.Controllers
                 return NotFound("Hall of fame is empty");
             }
 
-            var grouped = mappedGraves.GroupBy(m => m.PlayerID);
-
-            return Ok(grouped);
+            return Ok(mappedGraves);
         }
 
         [HttpPost]

@@ -10,13 +10,15 @@
   "dependencies": {
     "@aurelia/router": "latest",
     "aurelia": "latest",
-    "class-transformer": "^0.5.1"
+    "class-transformer": "^0.5.1",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@aurelia/plugin-gulp": "latest",
     "@aurelia/testing": "latest",
     "@aurelia/ts-jest": "latest",
     "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.17.5",
     "@types/node": "^20.12.3",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",

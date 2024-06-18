@@ -28,7 +28,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Read()
         {
-            var items = await _context.Items.ToListAsync();
+            var items = await _context.Items
+                .Include(m => m.ItemType)
+                .ToListAsync();
             var mappedItems = _mapper.Map<List<mvc_rpg.Entities.Item>, List<Models.Item>>(items);
 
             return Ok(mappedItems);
@@ -43,7 +45,9 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            var item = await _context.Items.FirstOrDefaultAsync(m => m.ID == id);
+            var item = await _context.Items
+                .Include(m => m.ItemType)
+                .FirstOrDefaultAsync(m => m.ID == id);
             var mappedItem = _mapper.Map<Models.Item>(item);
             
             if (item == null)
@@ -60,7 +64,7 @@ namespace API.Controllers
             await _context.Items.AddAsync(_mapper.Map<mvc_rpg.Entities.Item>(Item));
             _context.SaveChanges();
 
-            return Ok(Item);
+            return Ok(_context.Items.OrderByDescending(u => u.ID).FirstOrDefault());
         }
 
         [HttpPut]

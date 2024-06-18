@@ -1,0 +1,106 @@
+<import from="./welcome-page"></import>
+<import from="./players"></import>
+<import from="./about-page.html"></import>
+<import from="./missing-page"></import>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - mvc_rpg</title>
+    <link rel="stylesheet" href="../wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Carta</title>
+    <meta name="description" content="">
+
+    <!-- The compiled CSS file -->
+    <link rel="stylesheet" href="../wwwroot/css/production.css">
+
+    <!-- Web fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
+
+    <!-- favicon.ico. Place these in the root directory. -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+</head>
+
+<body class="has-animations">
+    <style>
+        .right, .left {
+            width: 20%;
+            float: left;
+        }
+
+        .main {
+            width: 60%;
+            float: left;
+            align-self: center;
+        }
+
+        @media screen and (max-width: 992px) {
+            .right, .left {
+                width: 0%;
+            }
+
+            .main {
+                width: 100%;
+            }
+        }
+
+        .navDiv {
+            margin-left: 10px;
+            margin-right: 10px;
+            
+        }
+
+        .brand {
+            font-size: 24px;
+        }
+
+        a {
+            margin-left: 10px;
+        }
+
+    </style>
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="navDiv">
+                <b class="brand" style="color: #B200FF">Aurelia</b>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a load="welcome-page">Game</a>
+                <a load="players">Players</a>
+                <a load="welcome-page">Hall of Fame</a>
+            </div>
+        </nav>
+        <p class="small align--center">Creative Commons License. Design by <a href="https://www.papayatemplates.com" class="link link--text">Papaya</a>.</p>
+    </header>
+    <div class="left">&nbsp;</div>
+    <div class="main">
+        <div class="container">
+            <main role="main" class="pb-3">
+                <au-viewport default="welcome-page" fallback="missing-page"></au-viewport>
+            </main>
+        </div>
+    </div>
+    <div class="right">&nbsp;</div>
+    <script src="../wwwroot/lib/jquery/dist/jquery.min.js"></script>
+    <script src="../wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+    <!-- The compiled JavaScript file -->
+    <script src="../wwwroot/js/production.js"></script>
+
+</body>
+</html>

@@ -1,26 +1,141 @@
-<h1 class="mb2" style="text-align:center"><b>Create a new player.</b></h1>
 
-<div class="container pt1 mt2 text--gray align--center">
-    <form method="post" enctype="multipart/form-data" style="text-align: center;">
-        <div class="grid-column mb3">
-            <label for="name">Name</label>
-            <input id="name" name="name" class="form-control" value.bind="name" />
-        </div>
-        <div class="grid-column mb3">
-            <label for="file">Profile Picture</label>
-            <input id="file" name="file" type="file" />
-        </div>
-        <div class="grid-column mb3">
-            <input type="submit" value="Create" class="btn btn--default" click.trigger="create()" />
-        </div>
-    </form>
+
+<style>
+    img {
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+    }
+
+    .parent {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top:5%;
+    }
+
+    .leftCreate {
+        width: 40%;
+        float: left;
+        margin-left:0%;
+        text-align: center;
+        border-radius: 12px;
+    }
+
+
+    .rightCreate {
+        width: 30%;
+        float: right;
+        margin-right:10%;
+        margin-top:5%;
+    }
+
+    .image1 {
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image2 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image3 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    
+    .image4 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    label {
+        color:white;
+    }
+
+    .block {
+        margin: 5%;
+        padding: 5px;
+        border-style: solid;
+        border-color: goldenrod;
+        border-width: 1px;
+        border-radius: 5px;
+        background-color: #3a3a3a;
+    }
+
+</style>
+
+<div class="leftCreate">
+    <div class="block">
+        <h1 class="mb2" style="text-align:center"><b>Creation</b></h1>
+        <form method="post" enctype="multipart/form-data" style="text-align: center;">
+            <div class="grid-column mb3">
+                <label for="name">Name</label>
+                <input id="name" name="name" class="form-control" value.bind="name" />
+            </div>
+            <div class="grid-column mb3">
+                <label for="file">Profile Picture</label>
+                <input id="file" name="file" type="file" />
+            </div>
+            <div class="grid-column mb3">
+                <label for="skintype">Skin Color</label><br>
+                <select value.bind="skintype">
+                    <option repeat.for="skin of skintypes"
+                            model.bind="skin.id">
+                        ${skin.id} - ${skin.name}
+                    </option>
+                </select>
+            </div>
+            <div class="grid-column mb3">
+                <label for="hairtype">Hair Type</label><br>
+                <select value.bind="hairtype">
+                    <option repeat.for="hair of hairtypes"
+                            model.bind="hair.id">
+                        ${hair.id} - ${hair.name}
+                    </option>
+                </select>
+            </div>
+            <div class="grid-column mb3">
+                <input type="submit" value="Create" class="btn btn--default" click.trigger="create()" />
+            </div>
+        </form>
+    </div>
 </div>
 
-<!--
-<ul>
-    <li repeat.for="e of player">Name: ${e.name}
-        <img src="data:image/png;base64, ${e.profilePicture}" alt="Unable to decode base64" style="width:64px; height:64px;"/>
+<div class="rightCreate">
+    <div class="parent">
+        <img class="image3" src="../files/Player/spr_player_shadow1.png" width="512" height="512" style="opacity:0.7">
+        <template switch.bind="skintype">
+            <span case.bind="0">
+                <img class="image1" src="../files/Player/spr_player_skin1.png" width="512" height="512">
+            </span>
+            <span case.bind="1">
+                <img class="image1" src="../files/Player/spr_player_skin2.png" width="512" height="512">
+            </span>
+            <span case.bind="2">
+                <img class="image1" src="../files/Player/spr_player_skin3.png" width="512" height="512">
+            </span>
+            <span default-case>undefined</span>
+        </template>
+        <template switch.bind="hairtype">
+            <span case.bind="0">
+                <img class="image2" src="../files/Player/spr_player_hair1.png" width="512" height="512">
+            </span>
+            <span case.bind="1">
+                <img class="image2" src="../files/Player/spr_player_hair2.png" width="512" height="512">
+            </span>
+            <span case.bind="2">
+                <img class="image2" src="../files/Player/spr_player_hair3.png" width="512" height="512">
+            </span>
+            <span default-case>undefined</span>
+        </template>
+        <img class="image4" src="../files/Player/spr_spotlight.png" width="512" height="512" style="opacity:0.1">
+    </div>
 
-    </li>
-</ul>
-    -->
+</div>
+

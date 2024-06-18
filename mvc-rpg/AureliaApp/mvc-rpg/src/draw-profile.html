@@ -1,0 +1,74 @@
+﻿<style>
+    .parent {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 5%;
+    }
+
+    img {
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+    }
+
+    .image1 {
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image2 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image3 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image4 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+</style>
+<!--
+<img src="data:image/png;base64, ${profile.profilePicture}" style="width:${width}"; height:"${height};" />
+
+
+-->
+
+
+<div class="parent">
+    <img class="image3" src="../files/Player/spr_player_shadow1.png" width="${width}" height="${height}" style="opacity:0.7">
+    <template switch.bind="profile.skinType">
+        <span case.bind="0">
+            <img class="image1" src="../files/Player/spr_player_skin1.png" width="${width}" height="${height}">
+        </span>
+        <span case.bind="1">
+            <img class="image1" src="../files/Player/spr_player_skin2.png" width="${width}" height="${height}">
+        </span>
+        <span case.bind="2">
+            <img class="image1" src="../files/Player/spr_player_skin3.png" width="${width}" height="${height}">
+        </span>
+        <span default-case>undefined</span>
+    </template>
+    <template switch.bind="profile.hairType">
+        <span case.bind="0">
+            <img class="image2" src="../files/Player/spr_player_hair1.png" width="${width}" height="${height}">
+        </span>
+        <span case.bind="1">
+            <img class="image2" src="../files/Player/spr_player_hair2.png" width="${width}" height="${height}">
+        </span>
+        <span case.bind="2">
+            <img class="image2" src="../files/Player/spr_player_hair3.png" width="${width}" height="${height}">
+        </span>
+        <span default-case>undefined</span>
+    </template>
+        <a load="/profile"><b style="font-size:36px">${profile.name}</b></a>
+    
+</div>

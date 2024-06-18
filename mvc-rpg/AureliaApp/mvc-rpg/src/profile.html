@@ -1,0 +1,121 @@
+<import from="./item"></import>
+
+<style>
+    img {
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+    }
+
+    .parent {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-top: 5%;
+    }
+
+    .leftCreate {
+        width: 40%;
+        float: left;
+        width: 380px;
+        margin-left: 0%;
+        text-align: center;
+        border-radius: 12px;
+    }
+
+
+    .rightCreate {
+        width: 30%;
+        float: right;
+        margin-right: 10%;
+        margin-top: 5%;
+    }
+
+    .image1 {
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image2 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image3 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    .image4 {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    label {
+        color: white;
+    }
+
+    
+
+    @media screen and (max-width: 1080x) {
+        .leftCreate {
+            margin-left: 0%;
+        }
+    }
+</style>
+
+<div class="leftCreate">
+    <div class="block">
+        <h1 class="mb2" style="text-align:center"><b>${player.name}</b></h1>
+        <b>Health: </b><span style="color: white">${player.health}</span>
+        <h1 class="mb2" style="text-align:center"><b>Equipped:</b></h1>
+        <img src="../files/UI/spr_border_common.png" width="90" height="90" style="opacity:1">
+        <h1 class="mb2" style="text-align:center"><b>Inventory</b></h1>
+        <span repeat.for="e of player.items">
+            <item item.bind="e"></item>
+        </span>
+
+    </div>
+    <span class="grid-column mb3">
+        <input value="Generate Example Item" class="btn btn--default" click.trigger="exampleFill()" />
+    </span>
+</div>
+
+
+
+<div class="rightCreate">
+    <div class="parent">
+        <img class="image3" src="../files/Player/spr_player_shadow1.png" width="512" height="512" style="opacity:0.7">
+        <template switch.bind="player.skinType">
+            <span case.bind="0">
+                <img class="image1" src="../files/Player/spr_player_skin1.png" width="512" height="512">
+            </span>
+            <span case.bind="1">
+                <img class="image1" src="../files/Player/spr_player_skin2.png" width="512" height="512">
+            </span>
+            <span case.bind="2">
+                <img class="image1" src="../files/Player/spr_player_skin3.png" width="512" height="512">
+            </span>
+            <span default-case>undefined</span>
+        </template>
+        <template switch.bind="player.hairType">
+            <span case.bind="0">
+                <img class="image2" src="../files/Player/spr_player_hair1.png" width="512" height="512">
+            </span>
+            <span case.bind="1">
+                <img class="image2" src="../files/Player/spr_player_hair2.png" width="512" height="512">
+            </span>
+            <span case.bind="2">
+                <img class="image2" src="../files/Player/spr_player_hair3.png" width="512" height="512">
+            </span>
+            <span default-case>undefined</span>
+        </template>
+        <img class="image4" src="../files/Player/spr_spotlight.png" width="512" height="512" style="opacity:0.1">
+    </div>
+
+</div>
+

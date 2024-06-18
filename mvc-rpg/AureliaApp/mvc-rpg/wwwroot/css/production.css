@@ -259,6 +259,7 @@ select,
 textarea {
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%
+    
 }
 
 a:active,
@@ -454,7 +455,7 @@ html {
 }
 
 body {
-    background-color: #f2f2f2 !important;
+    background-color: #242424 !important;
     color: #262b3a;
     line-height: 1.6rem;
     margin: 0;
@@ -502,6 +503,12 @@ body {
     appearance: none
 }
 
+.btn--small {
+    background: linear-gradient(203deg, rgba(255,240,0,1) 0%, rgba(255,176,0,1) 89%);
+    border-color: #B200FF;
+    color: white;
+    line-height: 0.4rem;
+}
     .btn:focus,
     .btn:hover {
         outline: 0;
@@ -531,7 +538,7 @@ body {
 }
 
 b {
-    background: linear-gradient(28deg, rgba(178,0,255,1) 0%, rgba(231,32,236,1) 89%);
+    background: linear-gradient(203deg, rgba(255,240,0,1) 0%, rgba(255,176,0,1) 89%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -547,7 +554,7 @@ fieldset[disabled] a.btn {
 }
 
 .btn--default {
-    background: linear-gradient(28deg, rgba(178,0,255,1) 0%, rgba(231,32,236,1) 89%);
+    background: linear-gradient(203deg, rgba(255,240,0,1) 0%, rgba(255,176,0,1) 89%);
     border-color: #B200FF;
     color: white
 }

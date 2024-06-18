@@ -12,5 +12,9 @@ namespace API.Models
         public string Name { get; set; }
         public bool isAlive { get; set; }
         public byte[]? ProfilePicture { get; set; }
+        public int equippedItemID { get; set; }
+        public hairType hairType { get; set; }
+        public skinType skinType { get; set; }
+        public int Health { get; set; }
     }
 }

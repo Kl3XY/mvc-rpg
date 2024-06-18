@@ -1,3 +1,5 @@
+<import from="./draw-profile"></import>
+
 <style>
     ul {
         list-style-type: none; 
@@ -18,7 +20,7 @@
     </div>
     <div style="text-align:center">
         <span class="grid-column mb3">
-            <a class="btn btn--default" load="welcome-page">Create New</a>
+            <a class="btn btn--default" load="/welcome-page">Create New</a>
         </span>
         <span class="grid-column mb3">
             <input value="Search" class="btn btn--default" click.trigger="search()" />
@@ -31,8 +33,7 @@
 <div class="container mt2 text--gray">
     <ul>
         <li repeat.for="e of player">
-            <img src="data:image/png;base64, ${e.profilePicture}" style="width:64px; height:64px;" />
-            ${e.name}
+            <draw-profile profile.bind="e" width.bind="128" height.bind="128"></draw-profile>
         </li>
     </ul>
 </div>
