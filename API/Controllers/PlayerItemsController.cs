@@ -90,25 +90,69 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut]
+        [Route("{id}/Items/Equip/{itemid}")]
+        public async Task<IActionResult> Equip([FromRoute] int id,[FromRoute] int itemid)
         {
-            if (id < 0)
+            if (id <= 0)
             {
-                return BadRequest("Invalid ID");
+                return BadRequest();
             }
 
-            var player = _context.Players.FirstOrDefault(m => m.ID == id);
-
-            if (player == null)
+            try
             {
-                return NotFound("The given id didn't yield any item");
+                var player = await _context.Players
+                    .Include(m => m.Items)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+                var item = player.Items.Find(m => m.ID == itemid);
+
+                if (item == null)
+                {
+                    return NotFound("The given itemid didn't yield any items");
+                }
+
+                player.equippedItemID = item.ID;
+
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return NotFound("The given id didn't yield any players");
             }
 
-            _context.Players.Remove(player);
-            _context.SaveChanges();
-            
-            return Ok("Entry Deleted Successfully");
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id, int itemid)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var player = await _context.Players
+                    .Include(m => m.Items)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+                var item = await _context.Items
+                .FirstOrDefaultAsync(m => m.ID == itemid);
+
+                player.Items.Remove(item);
+                _context.Items.Remove(item);
+
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return NotFound("The given id didn't yield any players");
+            }
+
+            return Ok();
         }
     }
 }

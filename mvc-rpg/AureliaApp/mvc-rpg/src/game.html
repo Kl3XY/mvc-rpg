@@ -1,94 +1,22 @@
-<style>
-    ul {
-        list-style-type: none;
-    }
+<import from="./draw-item"></import>
+<b>${selectedPlayer.name}</b>
+<b>${selectedPlayer.health}</b>
+<br>
+<a click.trigger="playerActionAttack()"><b>Attack</b></a> 
+<br>
+<a click.trigger="playerActionHeal()"><b>Heal (${Healing}x)</b></a> 
+<br>
 
-    li {
-        margin-bottom: 15px;
-    }
+<br>
+<br>
+<br>
+<b>${selectedEnemy.name}</b>
+<b>${selectedEnemy.health}</b>
+<br>
+Dropped Items
+<b>${droppedItems.length}</b>
+<span repeat.for="e of droppedItems">
+    <draw-item item.bind="e" player.bind="selectedPlayer"></draw-item>
 
-    .enemy, .player {
-        width: 40%;
-        float: left;
-        text-align: center;
-        margin-left: 5%;
-        margin-right: 5%;
-        border-radius: 12px;
-    }
+</span>
 
-    .won {
-        background-color: lightgreen;
-    }
-
-    .lost {
-        background-color: lightcoral;
-    }
-    
-    .topSplit, .botSplit
-    {
-
-    }
-</style>
-
-<h1 class="mb2" style="text-align:center"><b>Battleground</b></h1>
-<div class="topSplit">
-    <div class="container mt2 text--gray">
-        <div if.bind="selectedEnemy.isAlive == true">
-            <div class="enemy won">
-                ${selectedEnemy.name} </br>
-                <img src="../wwwroot/Default/img_defaultPicture.jpg" width="128" height="128" />
-            </div>
-        </div>
-        <div else.bind="selectedEnemy.isAlive == true">
-            <div class="enemy lost">
-                ${selectedEnemy.name} </br>
-                <img src="../wwwroot/Default/img_defaultPicture.jpg" width="128" height="128" />
-            </div>
-        </div>
-        <div if.bind="selectedPlayer.isAlive == true">
-            <div class="player won">
-                ${selectedPlayer.name} </br>
-                <img src="data:image/png;base64, ${selectedPlayer.profilePicture}" style="width:128px; height:128px;" />
-            </div>
-        </div>
-        <div else.bind="selectedPlayer.isAlive == true">
-            <div class="player lost">
-                ${selectedPlayer.name} </br>
-                <img src="data:image/png;base64, ${selectedPlayer.profilePicture}" style="width:128px; height:128px;" />
-            </div>
-        </div>
-    </div>
-
-    <div if.bind="selectedPlayer == undefined">
-        <div class="player lost">
-            All Players have been defeated!
-        </div>
-    </div>
-    <div if.bind="selectedEnemy == undefined">
-        <div class="enemy lost">
-            All Enemies have been defeated!
-        </div>
-    </div>
-</div>
-<div class="botSplit">
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-    <h1 class="mb2" style="text-align:center"><b>Combat Log.</b></h1>
-    <hr>
-    <ul>
-        <li repeat.for="c of combatLog">
-            <div if.bind="c.killedBy == 0">
-                [${c.dateTime}]: ${c.player.name} killed ${c.enemy.name}
-            </div>
-            <div if.bind="c.killedBy == 1">
-                [${c.dateTime}]: ${c.enemy.name} killed ${c.player.name} 
-            </div>
-
-        </li>
-    </ul>
-</div>

@@ -1,30 +1,19 @@
 import { IHttpClient, json } from '@aurelia/fetch-client';
 import { newInstanceOf } from '@aurelia/kernel';
-import { inject, resolve } from 'aurelia';
-import { IRouter, IRouteableComponent } from '@aurelia/router';
+import { inject, IEventAggregator, resolve } from 'aurelia';
+import { Player } from './classes'
 
-class Player {
-    name: string
-    id: number = 0
-    isAlive: boolean
-    ProfilePicture: string;
-    skinType: number;
-    hairType: number;
-}
 
 @inject(newInstanceOf(IHttpClient))
-export class Players implements IRouteableComponent {
+export class Players {
     public name = 'Player';
     public player: Player[] = [];
-    private router: IRouter = resolve(IRouter);
+    readonly ea: IEventAggregator = resolve(IEventAggregator)
 
     constructor(private http: IHttpClient) {
 
     }
-
-    async createNewPlayer() {
-        console.log("yoooo");
-    }
+    
 
     search() {
         this.player = [];

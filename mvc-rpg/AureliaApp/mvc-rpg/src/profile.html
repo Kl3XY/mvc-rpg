@@ -1,4 +1,4 @@
-<import from="./item"></import>
+<import from="./draw-item"></import>
 
 <style>
     img {
@@ -73,10 +73,15 @@
         <h1 class="mb2" style="text-align:center"><b>${player.name}</b></h1>
         <b>Health: </b><span style="color: white">${player.health}</span>
         <h1 class="mb2" style="text-align:center"><b>Equipped:</b></h1>
-        <img src="../files/UI/spr_border_common.png" width="90" height="90" style="opacity:1">
+        <span if.bind="player.equippedItem == undefined">
+            <img src="../files/UI/spr_border_common.png" width="90" height="90" style="opacity:1">
+        </span>
+        <span if.bind="player.equippedItem != undefined">
+            <draw-item item.bind="player.equippedItem" player.bind="player"></draw-item>
+        </span>
         <h1 class="mb2" style="text-align:center"><b>Inventory</b></h1>
         <span repeat.for="e of player.items">
-            <item item.bind="e"></item>
+            <draw-item item.bind="e" player.bind="player"></draw-item>
         </span>
 
     </div>

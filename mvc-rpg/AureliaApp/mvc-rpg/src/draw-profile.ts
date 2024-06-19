@@ -1,6 +1,5 @@
 import { customElement, bindable } from 'aurelia';
 import template from './draw-profile.html';
-
 class Player {
     name: string
     id: number = 0
